@@ -64,10 +64,6 @@
     "10": {
       "question": "Was sind die Nutzungsrechte der KI-Tools?",
       "answer": "Das AI Indices Tools Verzeichnis ist nur das Verzeichnis für KI-Tools. Die Nutzungsrechte der KI-Tools basieren auf der Website der KI-Tools."
-    },
-    "11": {
-      "question": "Ist das WebUI des AI Indices Verzeichnisses Open Source?",
-      "answer": "Ja, wir werden das WebUI des AI Indices Verzeichnisses auf GitHub (https://github.com/6677-ai/tap4-ai-webui) open source. Bitte geben Sie uns einen Stern."
     }
   },
   "FooterNavigation": {

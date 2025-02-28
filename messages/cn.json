@@ -64,10 +64,6 @@
     "10": {
       "question": "AI工具的使用权是什么？",
       "answer": "AI Indices工具目录只是AI工具的目录。AI工具的使用权基于AI工具的网站。"
-    },
-    "11": {
-      "question": "AI Indices目录的Web UI是开源的吗？",
-      "answer": "是的，我们将在GitHub（https://github.com/6677-ai/tap4-ai-webui）上开源AI Indices目录的Web UI。请给我们点星。"
     }
   },
   "FooterNavigation": {

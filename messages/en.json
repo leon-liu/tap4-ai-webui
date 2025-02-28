@@ -64,10 +64,6 @@
     "10": {
       "question": "What are the usage rights of the AI tools?",
       "answer": "AI Indices Tools Directory is just the AI Directory for AI tools. The usage rights of the AI tools are based on the AI tools' website."
-    },
-    "11": {
-      "question": "Does the webui of AI Indices Directory is open source?",
-      "answer": "Yes, we will open source the webui of AI Indices Directory in the github(https://github.com/6677-ai/tap4-ai-webui). Please star us."
     }
   },
   "FooterNavigation": {

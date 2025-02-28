@@ -64,10 +64,6 @@
     "10": {
       "question": "Quais são os direitos de uso das ferramentas de IA?",
       "answer": "O Diretório de Ferramentas de IA do Tap4 é apenas o Diretório de IA para ferramentas de IA. Os direitos de uso das ferramentas de IA são baseados no site das ferramentas de IA."
-    },
-    "11": {
-      "question": "O webui do Diretório de IA do Tap4 é de código aberto?",
-      "answer": "Sim, vamos abrir o código-fonte do webui do Diretório de IA do Tap4 no github (https://github.com/6677-ai/tap4-ai-webui). Por favor, nos dê uma estrela."
     }
   },
   "FooterNavigation": {
