@@ -32,34 +32,34 @@ export default function Footer() {
   const t = useTranslations('Footer');
 
   const SupportLinks = [
-    {
-      title: 'Chat o1',
-      href: 'https://chat4o.ai/',
-    },
-    {
-      title: 'Grok Image Generator',
-      href: 'https://grokimagegenerator.net/',
-    },
-    {
-      title: 'Flux AI Image Generator',
-      href: 'https://flux-ai.io/',
-    },
-    {
-      title: 'Photo to Video AI',
-      href: 'https://dreammachineai.online/',
-    },
-    {
-      title: 'Flux Pro Image Generator',
-      href: 'https://flux-pro.net/',
-    },
+    // {
+    //   title: 'Chat o1',
+    //   href: 'https://chat4o.ai/',
+    // },
+    // {
+    //   title: 'Grok Image Generator',
+    //   href: 'https://grokimagegenerator.net/',
+    // },
+    // {
+    //   title: 'Flux AI Image Generator',
+    //   href: 'https://flux-ai.io/',
+    // },
+    // {
+    //   title: 'Photo to Video AI',
+    //   href: 'https://dreammachineai.online/',
+    // },
+    // {
+    //   title: 'Flux Pro Image Generator',
+    //   href: 'https://flux-pro.net/',
+    // },
     {
       title: t('tap4'),
-      href: 'https://tap4.ai/',
+      href: 'https://aiindices.net/',
     },
-    {
-      title: t('tattoo'),
-      href: 'https://tattooai.design/',
-    },
+    // {
+    //   title: t('tattoo'),
+    //   href: 'https://tattooai.design/',
+    // },
   ];
 
   const INFO_LIST = [
