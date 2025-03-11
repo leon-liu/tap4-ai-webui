@@ -14,7 +14,7 @@ import crawler from './crawler';
 // insert web_nav table (tags <- tags[0] or 'other')
 // update submit table status
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     // 获取请求头中的 Authorization
     const authHeader = req.headers.get('Authorization');
@@ -78,7 +78,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   try {
     // 获取请求头中的 Authorization
     const authHeader = req.headers.get('Authorization');
