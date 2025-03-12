@@ -33,13 +33,16 @@ export async function POST(req: NextRequest) {
     // get response data
     const body = await req.json();
 
-    // Log only necessary information
-    console.log('Callback received:', {
+    // Use console.info for Vercel logging
+    console.info('[Crawler Callback]', {
       code: body.code,
       msg: body.msg,
       url: body.data?.url,
       status: body.code === 200 ? 'success' : 'failed',
+      timestamp: new Date().toISOString(),
     });
+
+    console.info(!body || body.code === 10001 || !body.data || Object.keys(body.data).length === 0);
 
     // Check response format and status
     if (!body || body.code === 10001 || !body.data || Object.keys(body.data).length === 0) {
