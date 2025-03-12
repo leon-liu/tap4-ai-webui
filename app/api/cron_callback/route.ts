@@ -31,8 +31,23 @@ export async function POST(req: NextRequest) {
     }
 
     // get response data
-    const { description, detail, name, screenshot_data, screenshot_thumbnail_data, tags, title, url } =
-      await req.json();
+    const body = await req.json();
+
+    // Check for empty response
+    if (!body || Object.keys(body).length === 0) {
+      const supabase = createClient();
+      // Update submit status to 2 for empty response
+      const { error: updateError } = await supabase.from('submit').update({ status: 2 }).eq('url', req.url);
+
+      if (updateError) {
+        console.error('Failed to update submit status:', updateError);
+        return NextResponse.json({ error: 'Failed to update submit status' }, { status: 500 });
+      }
+
+      return NextResponse.json({ message: 'Empty response, submit status updated to 2' }, { status: 200 });
+    }
+
+    const { description, detail, name, screenshot_data, screenshot_thumbnail_data, tags, title, url } = body;
 
     const supabase = createClient();
 
