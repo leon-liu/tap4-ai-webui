@@ -13,16 +13,16 @@ import { createClient } from '@/db/supabase/client';
 // update submit table status
 
 export async function POST(req: NextRequest) {
-  console.log('🚀 [Crawler Callback] Starting...');
+  process.stdout.write('🚀 [Crawler Callback] Starting...\n');
 
   try {
     // Get Authorization
     const authHeader = req.headers.get('Authorization');
-    console.log('📝 [Crawler Callback] Checking authorization');
+    process.stdout.write('📝 [Crawler Callback] Checking authorization\n');
 
     // Check Authorization and Verify token
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      console.log('❌ [Crawler Callback] Missing or invalid authorization');
+      process.stdout.write('❌ [Crawler Callback] Missing or invalid authorization\n');
       return NextResponse.json({ error: 'Authorization header is missing or malformed' }, { status: 401 });
     }
 
@@ -31,25 +31,27 @@ export async function POST(req: NextRequest) {
     // check key
     const isValid = submitKey === token;
     if (!isValid) {
-      console.log('❌ [Crawler Callback] Invalid token');
+      process.stdout.write('❌ [Crawler Callback] Invalid token\n');
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 
     // get response data
     const body = await req.json();
-    console.log('📥 [Crawler Callback] Received data:', {
-      code: body.code,
-      msg: body.msg,
-      url: body.data?.url,
-      status: body.code === 200 ? 'success' : 'failed',
-      timestamp: new Date().toISOString(),
-    });
+    process.stdout.write(
+      `📥 [Crawler Callback] Received data: ${JSON.stringify({
+        code: body.code,
+        msg: body.msg,
+        url: body.data?.url,
+        status: body.code === 200 ? 'success' : 'failed',
+        timestamp: new Date().toISOString(),
+      })}\n`,
+    );
 
     console.info(!body || body.code === 10001 || !body.data || Object.keys(body.data).length === 0);
 
     // Check response format and status
     if (!body || body.code === 10001 || !body.data || Object.keys(body.data).length === 0) {
-      console.log('⚠️ [Crawler Callback] Invalid or empty response received');
+      process.stdout.write('⚠️ [Crawler Callback] Invalid or empty response received\n');
       const supabase = createClient();
       // Update submit status to 2 for failed or empty response
       const { error: updateError } = await supabase
@@ -58,7 +60,7 @@ export async function POST(req: NextRequest) {
         .eq('url', body.data?.url || req.url);
 
       if (updateError) {
-        console.log('❌ [Crawler Callback] Failed to update submit status:', updateError);
+        process.stdout.write(`❌ [Crawler Callback] Failed to update submit status: ${JSON.stringify(updateError)}\n`);
         return NextResponse.json(
           {
             error: 'Failed to update submit status',
@@ -68,7 +70,7 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      console.log('✅ [Crawler Callback] Updated submit status to 2');
+      process.stdout.write('✅ [Crawler Callback] Updated submit status to 2\n');
       return NextResponse.json(
         {
           message: 'Crawler failed, submit status updated to 2',
@@ -79,7 +81,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { description, detail, name, screenshot_data, screenshot_thumbnail_data, tags, title, url } = body.data;
-    console.log('🔄 [Crawler Callback] Processing data for URL:', url);
+    process.stdout.write(`🔄 [Crawler Callback] Processing data for URL: ${url}\n`);
 
     const supabase = createClient();
 
@@ -91,12 +93,12 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (existingEntryError && existingEntryError.code !== 'PGRST116') {
-      // PGRST116 means no rows found
+      process.stdout.write(`❌ [Crawler Callback] Error checking existing entry: ${existingEntryError.message}\n`);
       throw new Error(existingEntryError.message);
     }
 
     if (existingEntry) {
-      console.log('📝 [Crawler Callback] Updating existing entry for:', url);
+      process.stdout.write(`📝 [Crawler Callback] Updating existing entry for: ${url}\n`);
       // Update existing entry
       const { error: updateWebNavigationError } = await supabase
         .from('web_navigation')
@@ -113,13 +115,15 @@ export async function POST(req: NextRequest) {
         .eq('id', existingEntry.id);
 
       if (updateWebNavigationError) {
-        console.log('❌ [Crawler Callback] Error updating web navigation:', updateWebNavigationError);
+        process.stdout.write(
+          `❌ [Crawler Callback] Error updating web navigation: ${JSON.stringify(updateWebNavigationError)}\n`,
+        );
         throw new Error(updateWebNavigationError.message);
       }
 
-      console.log('✅ [Crawler Callback] Successfully updated entry for:', url);
+      process.stdout.write(`✅ [Crawler Callback] Successfully updated entry for: ${url}\n`);
     } else {
-      console.log('📝 [Crawler Callback] Creating new entry for:', url);
+      process.stdout.write(`📝 [Crawler Callback] Creating new entry for: ${url}\n`);
       // Insert new entry
       const { error: insertWebNavigationError } = await supabase.from('web_navigation').insert({
         content: description,
@@ -134,26 +138,30 @@ export async function POST(req: NextRequest) {
       });
 
       if (insertWebNavigationError) {
-        console.log('❌ [Crawler Callback] Error inserting web navigation:', insertWebNavigationError);
+        process.stdout.write(
+          `❌ [Crawler Callback] Error inserting web navigation: ${JSON.stringify(insertWebNavigationError)}\n`,
+        );
         throw new Error(insertWebNavigationError.message);
       }
 
-      console.log('✅ [Crawler Callback] Successfully created new entry for:', url);
+      process.stdout.write(`✅ [Crawler Callback] Successfully created new entry for: ${url}\n`);
     }
 
     // Update submit table
-    console.log('📝 [Crawler Callback] Updating submit status to 1 for:', url);
+    process.stdout.write(`📝 [Crawler Callback] Updating submit status to 1 for: ${url}\n`);
     const { error: updateSubmitError } = await supabase.from('submit').update({ status: 1 }).eq('url', url);
 
     if (updateSubmitError) {
-      console.log('❌ [Crawler Callback] Error updating submit status:', updateSubmitError);
+      process.stdout.write(
+        `❌ [Crawler Callback] Error updating submit status: ${JSON.stringify(updateSubmitError)}\n`,
+      );
       throw new Error(updateSubmitError.message);
     }
 
-    console.log('✅ [Crawler Callback] Process completed successfully for:', url);
+    process.stdout.write(`✅ [Crawler Callback] Process completed successfully for: ${url}\n`);
     return NextResponse.json({ message: 'Success' });
   } catch (error) {
-    console.log('❌ [Crawler Callback] Error:', error instanceof Error ? error.message : 'Unknown error');
+    process.stdout.write(`❌ [Crawler Callback] Error: ${error instanceof Error ? error.message : 'Unknown error'}\n`);
     return NextResponse.json({ error: Error }, { status: 500 });
   }
 }
