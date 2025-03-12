@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       const { error: updateError } = await supabase
         .from('submit')
         .update({ status: 2 })
-        .eq('url', body.data?.url || req.url);
+        .eq('url', body.data?.url || body.url || req.url);
 
       if (updateError) {
         process.stdout.write(`❌ [Crawler Callback] Failed to update submit status: ${JSON.stringify(updateError)}\n`);
