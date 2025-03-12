@@ -33,8 +33,7 @@ export async function POST(req: NextRequest) {
     // get response data
     const body = await req.json();
 
-    // Use console.info for Vercel logging
-    console.info('[Crawler Callback]', {
+    console.error('[Crawler Callback] Request received:', {
       code: body.code,
       msg: body.msg,
       url: body.data?.url,
@@ -46,6 +45,7 @@ export async function POST(req: NextRequest) {
 
     // Check response format and status
     if (!body || body.code === 10001 || !body.data || Object.keys(body.data).length === 0) {
+      console.error('[Crawler Callback] Invalid or empty response:', { body });
       const supabase = createClient();
       // Update submit status to 2 for failed or empty response
       const { error: updateError } = await supabase
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
         .eq('url', body.data?.url || req.url);
 
       if (updateError) {
-        console.error('Failed to update submit status:', updateError);
+        console.error('[Crawler Callback] Failed to update submit status:', updateError);
         return NextResponse.json(
           {
             error: 'Failed to update submit status',
@@ -64,6 +64,7 @@ export async function POST(req: NextRequest) {
         );
       }
 
+      console.error('[Crawler Callback] Updated submit status to 2');
       return NextResponse.json(
         {
           message: 'Crawler failed, submit status updated to 2',
@@ -74,6 +75,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { description, detail, name, screenshot_data, screenshot_thumbnail_data, tags, title, url } = body.data;
+    console.error('[Crawler Callback] Processing data for URL:', url);
 
     const supabase = createClient();
 
@@ -106,10 +108,11 @@ export async function POST(req: NextRequest) {
         .eq('id', existingEntry.id);
 
       if (updateWebNavigationError) {
+        console.error('[Crawler Callback] Error updating web navigation:', updateWebNavigationError);
         throw new Error(updateWebNavigationError.message);
       }
 
-      console.log('Update result succeed!');
+      console.error('[Crawler Callback] Updated existing entry:', { url, name });
     } else {
       // Insert new entry
       const { error: insertWebNavigationError } = await supabase.from('web_navigation').insert({
@@ -125,6 +128,7 @@ export async function POST(req: NextRequest) {
       });
 
       if (insertWebNavigationError) {
+        console.error('[Crawler Callback] Error inserting web navigation:', insertWebNavigationError);
         throw new Error(insertWebNavigationError.message);
       }
 
@@ -135,12 +139,14 @@ export async function POST(req: NextRequest) {
     const { error: updateSubmitError } = await supabase.from('submit').update({ status: 1 }).eq('url', url);
 
     if (updateSubmitError) {
+      console.error('[Crawler Callback] Error updating submit status:', updateSubmitError);
       throw new Error(updateSubmitError.message);
     }
 
     console.log('Update submit succeed!');
     return NextResponse.json({ message: 'Success' });
   } catch (error) {
+    console.error('[Crawler Callback] Unexpected error:', error);
     return NextResponse.json({ error: Error }, { status: 500 });
   }
 }
