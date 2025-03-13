@@ -17,7 +17,7 @@ export default async function ExploreList({ pageNum }: { pageNum?: string }) {
   const end = start + WEB_PAGE_SIZE - 1;
 
   const [{ data: categoryList }, { data: navigationList, count }] = await Promise.all([
-    supabase.from('navigation_category').select(),
+    supabase.from('navigation_category').select().eq('del_flag', 0),
     supabase
       .from('web_navigation')
       .select('*', { count: 'exact' })

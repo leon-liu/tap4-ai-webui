@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
 
     const [{ data: categoryList, error: categoryListError }, { data: submitList, error: submitListError }] =
       await Promise.all([
-        supabase.from('navigation_category').select(),
+        supabase.from('navigation_category').select().eq('del_flag', 0),
         supabase
           .from('submit')
           .select()
