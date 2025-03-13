@@ -30,6 +30,7 @@ export default async function Page({ params }: { params: { code: string } }) {
     supabase
       .from('web_navigation')
       .select('*', { count: 'exact' })
+      .eq('del_flag', false)
       .eq('category_name', params.code)
       .range(0, InfoPageSize - 1),
   ]);

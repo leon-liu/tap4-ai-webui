@@ -7,6 +7,7 @@ export type WebNavigationListRow = {
   thumbnailUrl: string | null;
   title: string;
   url: string;
+  delFlag: boolean;
 };
 
 export type WebNavigationDetailData = {
@@ -22,4 +23,5 @@ export type WebNavigationDetailData = {
   title: string;
   url: string;
   websiteData: string;
+  delFlag: boolean;
 };

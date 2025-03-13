@@ -37,6 +37,7 @@ export default async function Page({ params }: { params: { search?: string } }) 
   const { data: dataList } = await supabase
     .from('web_navigation')
     .select()
+    .eq('del_flag', false)
     .ilike('detail', `%${decodeURI(params?.search || '')}%`);
 
   return (

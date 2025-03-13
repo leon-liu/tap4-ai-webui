@@ -79,6 +79,7 @@ export type Database = {
           title: string;
           url: string;
           website_data: string;
+          del_flag: boolean;
         };
         Insert: {
           category_name?: string | null;
@@ -94,6 +95,7 @@ export type Database = {
           title?: string | null;
           url?: string | null;
           website_data?: string | null;
+          del_flag?: boolean | null;
         };
         Update: {
           category_name?: string | null;
@@ -109,6 +111,7 @@ export type Database = {
           title?: string | null;
           url?: string | null;
           website_data?: string | null;
+          del_flag?: boolean | null;
         };
         Relationships: [];
       };

@@ -18,7 +18,7 @@ export async function generateMetadata({
     locale,
     namespace: 'Metadata.ai',
   });
-  const { data } = await supabase.from('web_navigation').select().eq('name', websiteName);
+  const { data } = await supabase.from('web_navigation').select().eq('del_flag', false).eq('name', websiteName);
 
   if (!data || !data[0]) {
     notFound();
@@ -33,7 +33,11 @@ export async function generateMetadata({
 export default async function Page({ params: { websiteName } }: { params: { websiteName: string } }) {
   const supabase = createClient();
   const t = await getTranslations('Startup.detail');
-  const { data: dataList } = await supabase.from('web_navigation').select().eq('name', websiteName);
+  const { data: dataList } = await supabase
+    .from('web_navigation')
+    .select()
+    .eq('del_flag', false)
+    .eq('name', websiteName);
   if (!dataList) {
     notFound();
   }
