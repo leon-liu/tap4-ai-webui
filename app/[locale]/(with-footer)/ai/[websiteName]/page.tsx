@@ -45,7 +45,7 @@ export default async function Page({ params: { websiteName } }: { params: { webs
 
   return (
     <div className='w-full'>
-      <div className='flex flex-col px-6 py-5 lg:h-[323px] lg:flex-row lg:justify-between lg:px-0 lg:py-10'>
+      <div className='flex flex-col px-6 pb-5 pt-10 lg:h-[323px] lg:flex-row lg:justify-between lg:px-0 lg:py-10 lg:pb-0 lg:pt-20'>
         <div className='flex flex-col items-center lg:items-start'>
           <div className='space-y-1 text-balance lg:space-y-3'>
             <h1 className='text-2xl lg:text-5xl'>{data.title}</h1>
@@ -81,7 +81,7 @@ export default async function Page({ params: { websiteName } }: { params: { webs
         </a>
       </div>
       <Separator className='bg-[#010101]' />
-      <div className='mb-5 px-3 lg:px-0'>
+      <div className='mb-5 px-5 lg:px-0'>
         <h2 className='my-5 text-2xl text-white/40 lg:my-10'>{t('introduction')}</h2>
         <MarkdownProse markdown={data?.detail || ''} />
       </div>

@@ -7,10 +7,10 @@ export const NAV_LINKS = [
     code: 'submit',
     href: '/submit',
   },
-  {
-    code: 'startup',
-    href: '/startup',
-  },
+  // {
+  //   code: 'startup',
+  //   href: '/startup',
+  // },
 ];
 
 export const RevalidateOneHour = 3600;

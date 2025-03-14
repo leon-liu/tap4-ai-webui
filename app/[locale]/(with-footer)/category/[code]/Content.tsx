@@ -27,7 +27,6 @@ export default function Content({
   return (
     <>
       <div className='mx-auto flex flex-col gap-3 py-5 lg:pt-10'>
-        <h1 className='text-center text-[28px] font-bold lg:text-5xl'>{headerTitle}</h1>
         <div className='mx-auto'>
           <ExploreBreadcrumb
             linkList={[
@@ -42,6 +41,7 @@ export default function Content({
             ]}
           />
         </div>
+        <h1 className='text-center text-[28px] font-bold lg:text-5xl'>{headerTitle}</h1>
       </div>
       <div className='mt-3'>
         {navigationList && !!navigationList?.length ? (

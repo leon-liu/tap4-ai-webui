@@ -42,27 +42,29 @@ export default async function Page({ params }: { params: { search?: string } }) 
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className='mb-10 mt-5'>
-        {params?.search && (
-          <TagList
-            data={categoryList!.map((item) => ({
-              id: String(item.id),
-              name: item.name,
-              href: `/category/${item.name}`,
-            }))}
-          />
-        )}
+      <div className='mb-10 mt-5 flex flex-col lg:mt-10 lg:flex-row'>
+        <div className='mb-5 lg:mr-5'>
+          {params?.search && (
+            <TagList
+              data={categoryList!.map((item) => ({
+                id: String(item.id),
+                name: item.title,
+                href: `/category/${item.name}`,
+              }))}
+            />
+          )}
+        </div>
+        <section className='flex flex-col gap-5'>
+          {dataList && !!dataList.length && params?.search ? (
+            <>
+              <h2 className='mb-1 text-left text-[18px] lg:text-2xl'>{t('result')}</h2>
+              <WebNavCardList dataList={dataList!} />
+            </>
+          ) : (
+            <Empty title={t('empty')} />
+          )}
+        </section>
       </div>
-      <section className='flex flex-col gap-5'>
-        {dataList && !!dataList.length && params?.search ? (
-          <>
-            <h2 className='mb-1 text-left text-[18px] lg:text-2xl'>{t('result')}</h2>
-            <WebNavCardList dataList={dataList!} />
-          </>
-        ) : (
-          <Empty title={t('empty')} />
-        )}
-      </section>
       <Separator className='mx-auto my-10 h-px w-4/5 bg-[#2C2D36] lg:my-16' />
       <Faq />
       <ScrollToTop />

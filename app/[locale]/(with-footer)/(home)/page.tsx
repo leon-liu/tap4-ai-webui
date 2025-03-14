@@ -56,25 +56,27 @@ export default async function Page() {
         <div className='flex w-full items-center justify-center'>
           <SearchForm />
         </div>
-        <div className='mb-10 mt-5'>
-          <TagList
-            data={categoryList!.map((item) => ({
-              id: String(item.id),
-              name: item.name,
-              href: `/category/${item.name}`,
-            }))}
-          />
-        </div>
-        <div className='flex flex-col gap-5'>
-          <h2 className='text-center text-[18px] lg:text-[32px]'>{t('ai-navigate')}</h2>
-          <WebNavCardList dataList={navigationList!} />
-          <Link
-            href='/explore'
-            className='mx-auto mb-5 flex w-fit items-center justify-center gap-5 rounded-[9px] border border-white p-[10px] text-sm leading-4 hover:opacity-70'
-          >
-            {t('exploreMore')}
-            <CircleChevronRight className='mt-[0.5] h-[20px] w-[20px]' />
-          </Link>
+        <div className='mb-10 mt-5 flex flex-col lg:mt-10 lg:flex-row'>
+          <div className='mb-5 lg:mr-5'>
+            <TagList
+              data={categoryList!.map((item) => ({
+                id: String(item.id),
+                name: item.title,
+                href: `/category/${item.name}`,
+              }))}
+            />
+          </div>
+          <div className='flex flex-col gap-5'>
+            {/* <h2 className='text-center text-[18px] lg:text-[32px]'>{t('ai-navigate')}</h2> */}
+            <WebNavCardList dataList={navigationList!} />
+            <Link
+              href='/explore'
+              className='mx-auto flex w-full items-center justify-center gap-5 rounded-[9px] border border-white p-[10px] text-sm leading-4 hover:opacity-70 lg:w-fit'
+            >
+              {t('exploreMore')}
+              <CircleChevronRight className='mt-[0.5] h-[20px] w-[20px]' />
+            </Link>
+          </div>
         </div>
         <Faq />
         <ScrollToTop />

@@ -6,7 +6,7 @@ import WebNavCardList from '@/components/webNav/WebNavCardList';
 
 import { TagList } from '../(home)/Tag';
 
-const WEB_PAGE_SIZE = 12;
+const WEB_PAGE_SIZE = 24;
 
 export default async function ExploreList({ pageNum }: { pageNum?: string }) {
   const supabase = createClient();
@@ -31,24 +31,28 @@ export default async function ExploreList({ pageNum }: { pageNum?: string }) {
       <div className='flex w-full items-center justify-center'>
         <SearchForm />
       </div>
-      <div className='mb-10 mt-5'>
-        <TagList
-          data={categoryList!.map((item) => ({
-            id: String(item.id),
-            name: item.name,
-            href: `/category/${item.name}`,
-          }))}
-        />
+      <div className='mb-10 mt-5 flex flex-col lg:mt-10 lg:flex-row'>
+        <div className='mb-5 lg:mr-5'>
+          <TagList
+            data={categoryList!.map((item) => ({
+              id: String(item.id),
+              name: item.title,
+              href: `/category/${item.name}`,
+            }))}
+          />
+        </div>
+        <div className='flex flex-col items-center'>
+          <WebNavCardList dataList={navigationList!} />
+          <BasePagination
+            currentPage={currentPage}
+            pageSize={WEB_PAGE_SIZE}
+            total={count!}
+            route='/explore'
+            subRoute='/page'
+            className='my-5 lg:my-10'
+          />
+        </div>
       </div>
-      <WebNavCardList dataList={navigationList!} />
-      <BasePagination
-        currentPage={currentPage}
-        pageSize={WEB_PAGE_SIZE}
-        total={count!}
-        route='/explore'
-        subRoute='/page'
-        className='my-5 lg:my-10'
-      />
     </>
   );
 }
