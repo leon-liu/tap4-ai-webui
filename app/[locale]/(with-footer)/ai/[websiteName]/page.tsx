@@ -47,7 +47,7 @@ export default async function Page({ params: { websiteName } }: { params: { webs
   return (
     <div className='w-full'>
       <div className='flex flex-col px-6 pb-10 pt-10 lg:mb-14 lg:h-[400px] lg:flex-row lg:justify-between lg:gap-3 lg:px-0 lg:py-10 lg:pb-0 lg:pt-20'>
-        <div className='flex flex-col items-center lg:items-start'>
+        <div className='flex flex-col items-start'>
           <div className='space-y-3 text-balance lg:space-y-5'>
             <h1 className='text-2xl lg:text-5xl'>{data.title}</h1>
             <h2 className='text-xs lg:text-sm'>{data.content}</h2>
