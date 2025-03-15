@@ -5,11 +5,11 @@ import { WebNavigation } from '@/db/supabase/types';
 import { CircleArrowRight, SquareArrowOutUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export default function WebNavCard({ name, thumbnail_url, title, url, content }: WebNavigation) {
+export default function WebNavCard({ name, thumbnail_url, title, url, content, tag_name }: WebNavigation) {
   const t = useTranslations('Home');
 
   return (
-    <div className='flex h-[210px] flex-col gap-3 rounded-xl bg-[#2C2D36] p-1 lg:h-[343px]'>
+    <div className='flex h-[250px] flex-col gap-3 rounded-xl bg-[#2C2D36] p-1 lg:h-[353px]'>
       <Link href={`/ai/${name}`} title={title} className='group relative'>
         <img
           src={thumbnail_url || ''}
@@ -33,6 +33,13 @@ export default function WebNavCard({ name, thumbnail_url, title, url, content }:
         </a>
       </div>
       <p className='line-clamp-3 px-[6px] text-xs text-white/70 lg:line-clamp-5 lg:text-sm'>{content}</p>
+      <Link
+        href={`/category/${tag_name}`}
+        title={tag_name}
+        className='mb-1 ml-1 mt-auto w-fit rounded-full px-3 py-1 text-xs text-gray-800 transition-opacity duration-200 hover:opacity-80 dark:bg-[#565761] dark:text-white'
+      >
+        {tag_name}
+      </Link>
     </div>
   );
 }

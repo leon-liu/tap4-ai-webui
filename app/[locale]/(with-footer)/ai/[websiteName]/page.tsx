@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/db/supabase/client';
 import { CircleArrowRight } from 'lucide-react';
@@ -45,11 +46,20 @@ export default async function Page({ params: { websiteName } }: { params: { webs
 
   return (
     <div className='w-full'>
-      <div className='flex flex-col px-6 pb-5 pt-10 lg:h-[323px] lg:flex-row lg:justify-between lg:px-0 lg:py-10 lg:pb-0 lg:pt-20'>
+      <div className='flex flex-col px-6 pb-10 pt-10 lg:mb-14 lg:h-[400px] lg:flex-row lg:justify-between lg:gap-3 lg:px-0 lg:py-10 lg:pb-0 lg:pt-20'>
         <div className='flex flex-col items-center lg:items-start'>
-          <div className='space-y-1 text-balance lg:space-y-3'>
+          <div className='space-y-3 text-balance lg:space-y-5'>
             <h1 className='text-2xl lg:text-5xl'>{data.title}</h1>
             <h2 className='text-xs lg:text-sm'>{data.content}</h2>
+            <div>
+              <Link
+                href={`/category/${data.tag_name}`}
+                title={data.tag_name}
+                className='w-fit rounded-full px-3 py-2 text-xs text-gray-800 transition-opacity duration-200 hover:opacity-80 dark:bg-[#565761] dark:text-white'
+              >
+                {data.tag_name}
+              </Link>
+            </div>
           </div>
           <a
             href={data.url}
@@ -80,7 +90,7 @@ export default async function Page({ params: { websiteName } }: { params: { webs
           </div>
         </a>
       </div>
-      <Separator className='bg-[#010101]' />
+      <Separator className='bg-[#484848]' />
       <div className='mb-5 px-5 lg:px-0'>
         <h2 className='my-5 text-2xl text-white/40 lg:my-10'>{t('introduction')}</h2>
         <MarkdownProse markdown={data?.detail || ''} />
