@@ -6,6 +6,7 @@ import { CircleArrowRight } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { Separator } from '@/components/ui/separator';
+import ExploreBreadcrumb from '@/components/explore/ExploreBreadcrumb';
 import BaseImage from '@/components/image/BaseImage';
 import MarkdownProse from '@/components/MarkdownProse';
 
@@ -34,6 +35,8 @@ export async function generateMetadata({
 export default async function Page({ params: { websiteName } }: { params: { websiteName: string } }) {
   const supabase = createClient();
   const t = await getTranslations('Startup.detail');
+  const ct = await getTranslations('Category');
+
   const { data: dataList } = await supabase
     .from('web_navigation')
     .select()
@@ -46,7 +49,21 @@ export default async function Page({ params: { websiteName } }: { params: { webs
 
   return (
     <div className='w-full'>
-      <div className='flex flex-col px-6 pb-10 pt-10 lg:mb-14 lg:h-[400px] lg:flex-row lg:justify-between lg:gap-3 lg:px-0 lg:py-10 lg:pb-0 lg:pt-20'>
+      <div className='px-6 pt-10 lg:px-0 lg:pt-20'>
+        <ExploreBreadcrumb
+          linkList={[
+            {
+              href: '/',
+              title: ct('home'),
+            },
+            {
+              title: websiteName,
+              isLast: true,
+            },
+          ]}
+        />
+      </div>
+      <div className='flex flex-col px-6 pb-10 pt-6 lg:mb-14 lg:h-[400px] lg:flex-row lg:justify-between lg:gap-3 lg:px-0 lg:py-10 lg:pb-0 lg:pt-20'>
         <div className='flex flex-col items-start'>
           <div className='space-y-3 text-balance lg:space-y-5'>
             <h1 className='text-2xl lg:text-5xl'>{data.title}</h1>
