@@ -10,7 +10,7 @@ import Empty from '@/components/Empty';
 import Faq from '@/components/Faq';
 import WebNavCardList from '@/components/webNav/WebNavCardList';
 
-import { TagList } from '../../Tag';
+// import { TagList } from '../../Tag';
 import Loading from './loading';
 
 const ScrollToTop = dynamic(() => import('@/components/page/ScrollToTop'), { ssr: false });
@@ -33,7 +33,7 @@ export const revalidate = RevalidateOneHour / 2;
 export default async function Page({ params }: { params: { search?: string } }) {
   const supabase = createClient();
   const t = await getTranslations('Home');
-  const { data: categoryList } = await supabase.from('navigation_category').select().eq('del_flag', 0);
+  // const { data: categoryList } = await supabase.from('navigation_category').select().eq('del_flag', 0);
   const { data: dataList } = await supabase
     .from('web_navigation')
     .select()
@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: { search?: string } }) 
   return (
     <Suspense fallback={<Loading />}>
       <div className='mb-10 mt-5 flex flex-col lg:mt-10 lg:flex-row'>
-        <div className='mb-5 lg:mr-5'>
+        {/* <div className='mb-5 lg:mr-5'>
           {params?.search && (
             <TagList
               data={categoryList!.map((item) => ({
@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: { search?: string } }) 
               }))}
             />
           )}
-        </div>
+        </div> */}
         <section className='flex flex-col gap-5'>
           {dataList && !!dataList.length && params?.search ? (
             <>

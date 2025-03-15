@@ -90,7 +90,7 @@ export default async function Page({ params: { websiteName } }: { params: { webs
           </div>
         </a>
       </div>
-      <Separator className='bg-[#484848]' />
+      <Separator className='mx-auto h-px w-11/12 bg-[#2C2D36] lg:w-full' />
       <div className='mb-5 px-5 lg:px-0'>
         <h2 className='my-5 text-2xl text-white/40 lg:my-10'>{t('introduction')}</h2>
         <MarkdownProse markdown={data?.detail || ''} />
