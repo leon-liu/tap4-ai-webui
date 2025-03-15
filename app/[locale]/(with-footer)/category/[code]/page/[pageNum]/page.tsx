@@ -27,6 +27,10 @@ export default async function Page({ params }: { params: { code: string; pageNum
   const supabase = createClient();
   const currentPage = Number(params?.pageNum || 1);
 
+  // start and end
+  const start = (currentPage - 1) * InfoPageSize;
+  const end = start + InfoPageSize - 1;
+
   const [{ data: categoryList }, { data: navigationList, count }] = await Promise.all([
     supabase.from('navigation_category').select().eq('name', params.code),
     supabase
@@ -34,7 +38,7 @@ export default async function Page({ params }: { params: { code: string; pageNum
       .select('*', { count: 'exact' })
       .eq('del_flag', false)
       .eq('category_name', params.code)
-      .range(0, InfoPageSize - 1),
+      .range(start, end),
   ]);
 
   if (!categoryList || !categoryList[0]) {
